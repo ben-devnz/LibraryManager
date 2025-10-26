@@ -1,5 +1,4 @@
-﻿using LibraryManager.ViewModels;
-using System.Windows;
+﻿using System.Windows;
 
 namespace LibraryManager.Views
 {
@@ -11,7 +10,6 @@ namespace LibraryManager.Views
         public AddBookView()
         {
             InitializeComponent();
-            DataContext = new AddBookViewModel(this);
         }
     }
 }

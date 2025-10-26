@@ -128,15 +128,15 @@ namespace LibraryManager.ViewModels
             // Set the owner of the window
             addWindow.Owner = Application.Current.MainWindow;
 
+            // Attach VM before data ShowDialog
+            addWindow.DataContext = new AddBookViewModel(addWindow);
+
             // Show as dialog (blocks until closed)
             bool? result = addWindow.ShowDialog();
 
             // If the user clicked save
-            if (result == true)
+            if (result == true && addWindow.DataContext is AddBookViewModel vm)
             {
-                // Get the ViewModel from the window
-                var vm = addWindow.DataContext as AddBookViewModel;
-
                 var newBook = new Book
                 {
                     Title = vm.Title,
@@ -165,11 +165,21 @@ namespace LibraryManager.ViewModels
         }
         private void UpdateBook()
         {
-            if (SelectedBook != null)
+            if (SelectedBook == null) return;
+
+            var editWindow = new EditBookView();
+            editWindow.Owner = Application.Current.MainWindow;
+
+            editWindow.DataContext = new EditBookViewModel(editWindow, SelectedBook);
+
+            bool? result = editWindow.ShowDialog();
+
+            if (result == true)
             {
                 _repository.UpdateBook(SelectedBook);
                 LoadBooks();
             }
+
         }
         private void GetAvailableBooks()
         {

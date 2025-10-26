@@ -98,6 +98,7 @@ namespace LibraryManager.Services
             return books;
         }
 
+        // UNUSED
         public Book GetBookById(int id)
         {
             Book book = null;
